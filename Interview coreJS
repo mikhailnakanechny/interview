@@ -2,11 +2,100 @@ coreJS
 
 ### Примеры вопросов: 
    * Типы данных в JS. Приведение типов
-   * Что такое hoisting?
+   
+   Есть 5 «примитивных» типов: number, string, boolean, null, undefined и 6-й тип – объекты object.
+   Оператор typeof x позволяет выяснить, какой тип находится в x, возвращая его в виде строки.
+   
+   В JavaScript есть три преобразования:
+
+Строковое: String(value) – в строковом контексте или при сложении со строкой. Работает очевидным образом.
+
+String(null)
+
+Численное: Number(value) – в численном контексте, включая унарный плюс +value. 
+Происходит при сравнении разных типов, кроме строгого равенства.
+
+
+Значение	Преобразуется в...
+undefined	NaN
+null	    0
+true / false	1 / 0
+Строка	Пробельные символы по краям обрезаются.
+Далее, если остаётся пустая строка, то 0, иначе из непустой строки "считывается" число, при ошибке результат NaN.
+
+Логическое: Boolean(value) – в логическом контексте, можно также сделать двойным НЕ: !!value.
+
+Значение	       Преобразуется в...
+undefined, null	  false
+Числа	            Все true, кроме 0, NaN -- false.
+Строки	          Все true, кроме пустой строки "" -- false
+Объекты	          Всегда true
+
+Точные таблицы преобразований даны выше в этой главе.
+
+Особым случаем является проверка равенства с null и undefined. 
+Они равны друг другу, но не равны чему бы то ни было ещё, этот случай прописан особо в спецификации.
+   
+   https://learn.javascript.ru/types-intro
+   https://learn.javascript.ru/types-conversion
+   
+   * Что такое hoisting? - "поднятие" var, function declaration, class declaration
+   
+  Назначение переменных имеет приоритет перед объявлением функции.
+  Объявление функции имеет приоритет перед объявлением переменной.
+  Объявления функций «поднимаются» над объявлениями переменных, но не над назначениями переменным.   
+  JavaScript непреклонно сначала объявляет, а затем инициализирует наши переменные.
+         
    * Let vs var. Const
-   * Передача данных по ссылке и по значению. Примеры
+var declarations are globally scoped or function scoped while let and const are block scoped.
+var variables can be updated and re-declared within its scope; let variables can be updated but not re-declared; 
+const variables can neither be updated nor re-declared.
+They are all hoisted to the top of their scope but while varvariables are initialized with undefined,
+let and const variables are not initialized.
+While var and let can be declared without being initialized, const must be initialized during declaration.
+
+   https://learn.javascript.ru/let-const    
+   https://dev.to/sarah_chima/var-let-and-const--whats-the-difference-69e
+   
+   * Передача данных по ссылке и по значению. Примеры   
+   При копировании переменной с объектом – копируется эта ссылка, а объект по-прежнему остается в единственном экземпляре.
+   
+   var user = { name: "Вася" }; // в переменной - ссылка
+   var admin = user; // скопировали ссылку
+   
+   клонирование
+   
+   var user = {
+   name: "Вася",
+   age: 30
+   };
+   var clone = {}; // новый пустой объект
+  // скопируем в него все свойства user
+  for (var key in user) {
+  clone[key] = user[key];
+  }
+  // теперь clone - полностью независимая копия
+  clone.name = "Петя"; // поменяли данные в clone
+  alert( user.name ); // по-прежнему "Вася"
+  
+ https://learn.javascript.ru/object-reference 
+   
    * {a: 10} == {a: 10}. Что вернет код?
-   * Что такое this?
+   
+   false - 
+   
+   https://habr.com/post/171359/
+   
+   * Что такое this?  - контекст вызова  
+   для метод
+   Для доступа к текущему объекту из метода используется ключевое слово this.
+   Значением this является объект перед «точкой», в контексте которого вызван метод
+   
+   http://javascript.ru/files/upload/2007/09/mwsnap022.jpg
+   
+   https://learn.javascript.ru/object-methods
+   http://javascript.ru/tutorial/object/thiskeyword
+   
    * Apply, call, bind. Для чего используются? В чем отличия?
    * Замыкание. Приведите пример.
    * Sum(1)(2)
